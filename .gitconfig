@@ -2,15 +2,16 @@
 	name = rabume
 	email = info@rabu.me
 
-[url "git@github.com:"]
-  insteadOf = https://github.com/
-
 [init]
   defaultBranch = main
 
+## Comment out when keys are setup
+# [url "git@github.com:"]
+#  	insteadOf = https://github.com/
+
 ## Activate when backing up on local NAS
 # [safe]
-# directory = *
+# 	directory = *
 
 [credential]
   helper = store
