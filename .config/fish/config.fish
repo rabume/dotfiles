@@ -8,7 +8,6 @@ set fish_greeting
 fish_vi_key_bindings
 
 # alias
-alias box /home/rafael/cfml/commandbox/box
 alias ld lazydocker
 alias lg lazygit
 alias vi nvim
