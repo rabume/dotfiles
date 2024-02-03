@@ -1,0 +1,39 @@
+[user]
+	name = rabume
+	email = info@rabu.me
+
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
+[init]
+  defaultBranch = main
+
+## Activate when backing up on local NAS
+# [safe]
+# directory = *
+
+[credential]
+  helper = store
+
+[alias]
+	fpd="!gitPruneBranch() { git fetch --prune && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done }; gitPruneBranch"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[diff "lockb"]
+	textconv = bun
+	binary = true
+
+[commit]
+  gpgsign = true
+
+[gpg]
+  program = gpg
+
+[pull]
+  rebase = false
+  ff = only
