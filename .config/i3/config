@@ -300,7 +300,7 @@ bindsym $mod+space exec --no-startup-id $HOME/scripts/i3-keyboard-layout.sh cycl
 exec --no-startup-id picom --no-frame-pacing
 
 # Start betterlockscreen
-exec --no-startup-id "sleep 15; betterlockscreen -u ~/Pictures/wallpaper/wallhaven-4vpx33.jpg"
+exec --no-startup-id "sleep 15; betterlockscreen -u ~/Pictures/wallpaper/wallpaper.jpg"
 
 # Bind key 'x' to betterlockscreen
 bindsym $mod+x exec --no-startup-id betterlockscreen -l
