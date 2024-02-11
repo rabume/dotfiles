@@ -20,6 +20,7 @@ local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
   -- custom mappings
+  vim.keymap.set('n', '<C-b>', api.tree.toggle, opts('Toggle'))
   vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent, opts('Up'))
   vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 end
@@ -647,8 +648,8 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    -- ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    -- ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
@@ -679,6 +680,3 @@ cmp.setup {
     { name = 'path' },
   },
 }
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
