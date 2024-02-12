@@ -7,6 +7,12 @@ set fish_greeting
 # enable vim mode
 fish_vi_key_bindings
 
+# add key bindings for clipboard
+function fish_user_key_bindings
+  bind y fish_clipboard_copy
+  bind p fish_clipboard_paste
+end
+
 # alias
 alias ld lazydocker
 alias lg lazygit
