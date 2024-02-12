@@ -14,6 +14,9 @@ vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
 
+-- nnoremap <silent> <leader>gg :LazyGit<CR>
+vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
+
 -- Enable filetype plugins and indentations
 vim.cmd('filetype plugin indent on')
 
