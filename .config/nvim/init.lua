@@ -8,21 +8,45 @@ vim.g.maplocalleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- global mappings
+vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
+
+-- Enable filetype plugins and indentations
+vim.cmd('filetype plugin indent on')
+
+-- Set shiftwidth and tabstop
+vim.api.nvim_set_option('shiftwidth', 2)
+vim.api.nvim_set_option('tabstop', 2)
+
+-- Auto indent and smart indent
+vim.api.nvim_set_option('autoindent', true)
+vim.api.nvim_set_option('smartindent', true)
+
+-- Disable line wrapping
+vim.api.nvim_set_option('wrap', false)
+
+-- Configure backspace behavior
+vim.api.nvim_set_option('backspace', 'start,eol,indent')
+
+-- Set path for finding files and search down into subfolders
+vim.api.nvim_set_option('path', vim.api.nvim_get_option('path') .. ',**')
+
+-- Ignore node_modules in wildignore
+vim.api.nvim_set_option('wildignore', vim.api.nvim_get_option('wildignore') .. ',*/node_modules/*')
+
+-- Custom mappings for toggling comments
+vim.api.nvim_set_keymap("n", "<C-/>", "<Plug>(comment_toggle_linewise_current)", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<C-/>", "<Plug>(comment_toggle_linewise_visual)", { noremap = true, silent = true })
+
 -- [[ nvim tree custom on_attach ]]
 local function my_on_attach(bufnr)
   local api = require "nvim-tree.api"
 
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
-
-  -- custom mappings
-  vim.keymap.set('n', '<C-b>', api.tree.toggle, opts('Toggle'))
-  vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent, opts('Up'))
-  vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
 end
 
 -- [[ Install `lazy.nvim` plugin manager ]]
