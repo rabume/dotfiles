@@ -17,6 +17,8 @@ end
 alias ld lazydocker
 alias lg lazygit
 alias vi nvim
+alias cd z
+alias cdi zi
 
 fish_add_path /home/rafael/.spicetify
 
@@ -31,3 +33,9 @@ end
 # export bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# pyenv
+pyenv init - | source
+
+# zoxide 
+zoxide init fish | source
