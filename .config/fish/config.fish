@@ -19,16 +19,10 @@ alias lg lazygit
 alias vi nvim
 alias cd z
 alias cdi zi
+alias ls lsd
 
+# Path for spicetify
 fish_add_path /home/rafael/.spicetify
-
-function ssh-vds
-    set remote_user "CHANGEME"
-    set remote_host "CHANGEME"
-    set pw_id "CHANGEME"
-    set password (bw get password "$pw_id")
-    sshpass -p "$password" ssh $remote_user@$remote_host
-end
 
 # export bun
 set --export BUN_INSTALL "$HOME/.bun"
@@ -39,3 +33,12 @@ pyenv init - | source
 
 # zoxide 
 zoxide init fish | source
+
+function ssh-vds
+    set remote_user "CHANGEME"
+    set remote_host "CHANGEME"
+    set pw_id "CHANGEME"
+    set password (bw get password "$pw_id")
+    sshpass -p "$password" ssh $remote_user@$remote_host
+end
+
