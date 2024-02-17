@@ -20,6 +20,7 @@ alias vi nvim
 alias cd z
 alias cdi zi
 alias ls lsd
+alias yt "ytfzf -t -T chafa"
 
 # Path for spicetify
 fish_add_path /home/rafael/.spicetify
