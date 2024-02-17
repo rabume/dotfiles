@@ -1,40 +1,58 @@
 [user]
-	name = rabume
-	email = info@rabu.me
+    name = rabume
+    email = info@rabu.me
 
 [init]
-  defaultBranch = main
+    defaultBranch = main
 
 ## Comment out when keys are setup
-# [url "git@github.com:"]
-#  	insteadOf = https://github.com/
+#[url "git@github.com:"]
+#    insteadOf = https://github.com/
 
 ## Activate when backing up on local NAS
 # [safe]
-# 	directory = *
+#    directory = *
 
 [credential]
-  helper = store
+    helper = store
 
 [alias]
-	fpd="!gitPruneBranch() { git fetch --prune && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done }; gitPruneBranch"
+    fpd="!gitPruneBranch() { git fetch --prune && for branch in `git branch -vv | grep ': gone]' | awk '{print $1}'`; do git branch -D $branch; done }; gitPruneBranch"
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [diff "lockb"]
-	textconv = bun
-	binary = true
+    textconv = bun
+    binary = true
 
 [commit]
-  gpgsign = true
+    gpgsign = true
 
 [gpg]
-  program = gpg
+    program = gpg
 
 [pull]
-  rebase = false
-  ff = only
+    rebase = false
+    ff = only
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    light = false 
+    side-by-side = true
+    line-numbers = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
