@@ -315,7 +315,7 @@ bindsym $mod+shift+s exec --no-startup-id nautilus
 bindsym $mod+Tab workspace back_and_forth
 
 # Restore xrandr configuration
-exec --no-startup-id "sleep 4; $HOME/.screenlayout/layout.sh"
+# exec --no-startup-id "sleep 4; $HOME/.screenlayout/layout.sh"
 
 # Nitrogen
 exec --no-startup-id "sleep 6; nitrogen --restore"
