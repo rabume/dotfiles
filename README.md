@@ -1,4 +1,5 @@
 # dotfiles
+![image](https://github.com/rabume/dotfiles/assets/19410629/1181595d-7b21-4335-baf3-90140ea46d33)
 
 This is a collection of my dotfiles. I use [GNU Stow](https://www.gnu.org/software/stow/) to manage them.
 
