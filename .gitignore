@@ -1,0 +1,5 @@
+.local/*
+!.local/*.rasi
+
+.config/fish/completions/**
+.config/fish/functions/**
