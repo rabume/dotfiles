@@ -22,6 +22,7 @@ alias cdi zi
 alias ls lsd
 alias yt "ytfzf -t -T chafa"
 alias sf "~/scripts/ripgrep-fzf-launcher.sh"
+alias online "arp-scan --localnet"
 
 # binds
 bind \cf sf
