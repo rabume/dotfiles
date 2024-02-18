@@ -230,6 +230,7 @@ require('lazy').setup({
     config = function()
       require('catppuccin').setup {
         style = 'mocha',
+        transparent_background = true,
       }
       require('catppuccin').load()
     end,
