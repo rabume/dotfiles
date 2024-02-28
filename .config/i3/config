@@ -85,11 +85,8 @@ set $ws2 "2"
 set $ws3 "3"   
 set $ws4 "4"   
 set $ws5 "5"   
-set $ws6 "6"  
-set $ws7 "7"   
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10" 
+set $ws6 "➡"  
+set $ws7 "⬅"   
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -273,6 +270,22 @@ bindsym 0 gaps left current set 0
         bindsym Escape mode "default"
 
 }
+
+# Example to assign workspaces to output
+# assign workspaces to screens
+# workspace $ws1 output DP-1 
+# workspace $ws2 output DP-1 
+# workspace $ws3 output DP-1 
+# workspace $ws4 output DP-1 
+# workspace $ws5 output DP-1
+# workspace $ws6 output DP-2 
+# workspace $ws7 output HDMI-1 
+
+# Example to switch to output
+# switch to output
+# bindsym $mod++ctrl+1 focus output DP-1
+# bindsym $mod++ctrl+2 focus output DP-2
+# bindsym $mod++ctrl+3 focus output HDMI-1
 
 # Set inner/outer gaps
 gaps inner 15
