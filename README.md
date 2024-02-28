@@ -5,9 +5,16 @@ This is a collection of my dotfiles. I use [GNU Stow](https://www.gnu.org/softwa
 
 ## Usage
 
+To apply all files:
+
 ```bash
 git clone https://github.com/rabume/dotfiles.git && cd dotfiles
 stow --adopt .
+```
+To apply only certain files:
+```bash
+git clone https://github.com/rabume/dotfiles.git && cd dotfiles
+stow --adopt -t ~/.config nvim
 ```
 
 ## Notice
