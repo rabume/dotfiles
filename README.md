@@ -14,7 +14,8 @@ stow --adopt .
 To apply only certain files:
 ```bash
 git clone https://github.com/rabume/dotfiles.git && cd dotfiles
-stow --adopt -t ~/.config nvim
+# nvim for example
+stow --adopt -t ~/.config/nvim nvim
 ```
 
 ## Notice
