@@ -217,7 +217,20 @@ require('lazy').setup({
     },
     config = function()
       require("nvim-tree").setup {
+        update_cwd = true,
         on_attach = my_on_attach,
+        filters = {
+          dotfiles = false,
+          custom = { '^.git$' },
+        },
+        git = {
+          enable = true,
+          ignore = false,
+        },
+        update_focused_file = {
+          enable = true,
+          update_cwd = true,
+        }
       }
     end,
   },
