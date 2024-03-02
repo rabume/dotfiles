@@ -27,3 +27,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- NvimTree keymaps
 vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
+
+-- Bufferline keymaps
+vim.keymap.set('n', '<TAB>', ':BufferLineCycleNext<CR>', { desc = 'Move to next buffer' })
+vim.keymap.set('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', { desc = 'Move to next buffer' })
+vim.api.nvim_set_keymap('n', '<C-w>', ':bd<CR>', { noremap = true, silent = true })
