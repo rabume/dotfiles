@@ -10,7 +10,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Enable filetype plugins and indentations
-vim.cmd('filetype plugin indent on')
+vim.cmd 'filetype plugin indent on'
 
 -- Set shiftwidth and tabstop
 vim.api.nvim_set_option('shiftwidth', 2)
@@ -27,14 +27,14 @@ vim.api.nvim_set_option('wrap', false)
 vim.api.nvim_set_option('backspace', 'start,eol,indent')
 
 -- Set path for finding files and search down into subfolders
-vim.api.nvim_set_option('path', vim.api.nvim_get_option('path') .. ',**')
+vim.api.nvim_set_option('path', vim.api.nvim_get_option 'path' .. ',**')
 
 -- Ignore node_modules in wildignore
-vim.api.nvim_set_option('wildignore', vim.api.nvim_get_option('wildignore') .. ',*/node_modules/*')
+vim.api.nvim_set_option('wildignore', vim.api.nvim_get_option 'wildignore' .. ',*/node_modules/*')
 
 -- [[ nvim tree custom on_attach ]]
 local function my_on_attach(bufnr)
-  local api = require "nvim-tree.api"
+  local api = require 'nvim-tree.api'
   api.config.mappings.default_on_attach(bufnr)
 end
 
@@ -60,34 +60,6 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-
-  -- NOTE: This is where the plugins related to LSP can be installed.
-  {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      {
-        'j-hui/fidget.nvim',
-        opts = {
-          notification = {
-            window = {
-              winblend = 0,
-              border = 'single'
-            }
-          }
-        }
-      },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
-    },
-  },
 
   {
     -- Autocompletion
@@ -118,7 +90,8 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
+
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -195,14 +168,14 @@ require('lazy').setup({
   },
 
   {
-    "nvim-tree/nvim-tree.lua",
-    version = "*",
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
     lazy = false,
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
+      'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require("nvim-tree").setup {
+      require('nvim-tree').setup {
         update_cwd = true,
         on_attach = my_on_attach,
         filters = {
@@ -216,14 +189,14 @@ require('lazy').setup({
         update_focused_file = {
           enable = true,
           update_cwd = true,
-        }
+        },
       }
     end,
   },
 
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     lazy = false,
     config = function()
@@ -237,8 +210,8 @@ require('lazy').setup({
 
   {
     'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {}
+    event = 'InsertEnter',
+    opts = {},
   },
 
   {
@@ -357,14 +330,14 @@ require('telescope').setup {
       hidden = true,
     },
     grep_string = {
-      additional_args = { "--hidden" }
+      additional_args = { '--hidden' },
     },
     live_grep = {
-      additional_args = { "--hidden" }
+      additional_args = { '--hidden' },
     },
   },
   defaults = {
-    file_ignore_patterns = { ".git/" },
+    file_ignore_patterns = { '.git/' },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -448,8 +421,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
-      'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -517,50 +489,6 @@ vim.defer_fn(function()
   }
 end, 0)
 
--- [[ Configure LSP ]]
-local on_attach = function(_, bufnr)
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  -- Set border for lsp floating windows
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
-
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', function()
-    vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'source' } } }
-  end, '[C]ode [A]ction')
-
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-
 -- Document existing key chains
 require('which-key').register {
   ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
@@ -580,50 +508,9 @@ require('which-key').register({
   ['<leader>h'] = { 'Git [H]unk' },
 }, { mode = 'v' })
 
--- mason-lspconfig requires that these setup functions are called in this order
--- before setting up the servers.
-require('mason').setup()
-require('mason-lspconfig').setup()
-
--- Enable the following language servers
-local servers = {
-  gopls = {},
-  rust_analyzer = {},
-  tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs' } },
-
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-}
-
--- Setup neovim lua configuration
-require('neodev').setup()
-
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -634,8 +521,8 @@ luasnip.config.setup {}
 
 cmp.setup {
   window = {
-    completion = cmp.config.window.bordered('single'),
-    documentation = cmp.config.window.bordered('single'),
+    completion = cmp.config.window.bordered 'single',
+    documentation = cmp.config.window.bordered 'single',
   },
   snippet = {
     expand = function(args)
