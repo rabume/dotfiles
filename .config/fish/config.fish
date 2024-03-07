@@ -52,3 +52,6 @@ alias online "arp-scan --localnet"
 
 # binds
 bind \cf sf
+
+# set path for default nodejs version
+set -gx PATH $HOME/.nvm/versions/node/v21.1.0/bin $PATH
