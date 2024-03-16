@@ -1,157 +1,126 @@
 return {
-  'neovim/nvim-lspconfig',
-  event = { 'BufReadPre', 'BufNewFile' },
-  dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
-    { 'antosha417/nvim-lsp-file-operations', config = true },
-  },
-  config = function()
-    -- import lspconfig plugin
-    local lspconfig = require 'lspconfig'
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs and related tools to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-    -- import cmp-nvim-lsp plugin
-    local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+      -- Useful status updates for LSP.
+      {
+        'j-hui/fidget.nvim',
+        opts = {
 
-    local on_attach = function(bufnr)
-      local nmap = function(keys, func, desc)
-        if desc then
-          desc = 'LSP: ' .. desc
-        end
-
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-      end
-
-      -- Set border for lsp floating windows
-      vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
-      vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
-
-      nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-      nmap('<leader>ca', function()
-        vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'source' } } }
-      end, '[C]ode [A]ction')
-
-      nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-      nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-      nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-      nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-      nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-      nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-      -- See `:help K` for why this keymap
-      nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-      nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-      -- Lesser used LSP functionality
-      nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-      nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-      nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-      nmap('<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end, '[W]orkspace [L]ist Folders')
-
-      -- Create a command `:Format` local to the LSP buffer
-      vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
-      end, { desc = 'Format current buffer with LSP' })
-    end
-
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = ' ', Warn = ' ', Hint = '󰠠 ', Info = ' ' }
-    for type, icon in pairs(signs) do
-      local hl = 'DiagnosticSign' .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
-    end
-
-    -- configure html server
-    lspconfig['html'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure typescript server with plugin
-    lspconfig['tsserver'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure css server
-    lspconfig['cssls'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure tailwindcss server
-    lspconfig['tailwindcss'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure svelte server
-    lspconfig['svelte'].setup {
-      capabilities = capabilities,
-      on_attach = function(client)
-        on_attach(client)
-
-        vim.api.nvim_create_autocmd('BufWritePost', {
-          pattern = { '*.js', '*.ts' },
-          callback = function(ctx)
-            if client.name == 'svelte' then
-              client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.file })
-            end
-          end,
-        })
-      end,
-    }
-
-    -- configure prisma orm server
-    lspconfig['prismals'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure graphql language server
-    lspconfig['graphql'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { 'graphql', 'gql', 'svelte', 'typescriptreact', 'javascriptreact' },
-    }
-
-    -- configure emmet language server
-    lspconfig['emmet_ls'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
-    }
-
-    -- configure python server
-    lspconfig['pyright'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-    }
-
-    -- configure lua server (with special settings)
-    lspconfig['lua_ls'].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = { -- custom settings for lua
-        Lua = {
-          -- make the language server recognize "vim" global
-          diagnostics = {
-            globals = { 'vim' },
-          },
-          workspace = {
-            -- make language server aware of runtime files
-            library = {
-              [vim.fn.expand '$VIMRUNTIME/lua'] = true,
-              [vim.fn.stdpath 'config' .. '/lua'] = true,
+          notification = {
+            window = {
+              winblend = 0,
+              border = 'single',
             },
           },
         },
       },
-    }
-  end,
+
+      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+      {
+        'folke/neodev.nvim',
+        opts = {},
+      },
+    },
+    config = function()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        callback = function(event)
+          local map = function(keys, func, desc)
+            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
+
+          -- Set border for lsp floating windows
+          vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' })
+          vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' })
+
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.server_capabilities.documentHighlightProvider then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.clear_references,
+            })
+          end
+        end,
+      })
+
+      local signs = { Error = ' ', Warn = ' ', Hint = '󰠠 ', Info = ' ' }
+      for type, icon in pairs(signs) do
+        local hl = 'DiagnosticSign' .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+      end
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      local servers = {
+        gopls = {},
+        pyright = {},
+        rust_analyzer = {},
+        tsserver = {},
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+              diagnostics = { globals = { 'vim' }, disable = { 'missing-fields' } },
+              workspace = {
+                -- make language server aware of runtime files
+                library = {
+                  [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+                  [vim.fn.stdpath 'config' .. '/lua'] = true,
+                },
+              },
+            },
+          },
+        },
+      }
+
+      require('mason').setup()
+
+      -- You can add other tools here that you want Mason to install
+      -- for you, so that they are available from within Neovim.
+      local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, {
+        'stylua', -- Used to format lua code
+      })
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      require('mason-lspconfig').setup {
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+            -- This handles overriding only values explicitly passed
+            -- by the server configuration above. Useful when disabling
+            -- certain features of an LSP (for example, turning off formatting for tsserver)
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            require('lspconfig')[server_name].setup(server)
+          end,
+        },
+      }
+    end,
+  },
 }
