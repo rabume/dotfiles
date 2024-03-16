@@ -12,8 +12,8 @@ vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
 
 -- Toggling comments
-vim.api.nvim_set_keymap("n", "<C-/>", "<Plug>(comment_toggle_linewise_current)", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-/>", "<Plug>(comment_toggle_linewise_visual)", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-/>', '<Plug>(comment_toggle_linewise_visual)', { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
