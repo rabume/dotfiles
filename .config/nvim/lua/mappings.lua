@@ -11,6 +11,10 @@ vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true 
 -- LazyGit
 vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
 
+-- Copilot
+vim.api.nvim_set_keymap('n', '<leader>dc', ':Copilot disable<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ec', ':Copilot enable<CR>', { noremap = true, silent = true })
+
 -- Toggling comments
 vim.api.nvim_set_keymap('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-/>', '<Plug>(comment_toggle_linewise_visual)', { noremap = true, silent = true })
