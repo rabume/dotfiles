@@ -16,6 +16,7 @@ return {
         html = { 'prettier' },
         json = { 'prettier' },
         yaml = { 'prettier' },
+        vue = { 'prettier' },
         markdown = { 'prettier' },
         graphql = { 'prettier' },
         lua = { 'stylua' },
