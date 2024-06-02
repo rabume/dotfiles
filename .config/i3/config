@@ -299,6 +299,9 @@ new_window 1pixel
 client.focused #7579F0 #7579F0 #FFFFFF #7579F0 #7579F0
 client.unfocused #222222 #222222 #FFFFFF #222222 #222222
 
+# disable border for some applications
+for_window [class="Nautilus"] border none
+
 # Scratchpad
 bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+minus move scratchpad
