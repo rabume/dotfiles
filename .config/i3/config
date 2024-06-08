@@ -301,6 +301,9 @@ client.unfocused #222222 #222222 #FFFFFF #222222 #222222
 
 # disable border for some applications
 for_window [class="Nautilus"] border none
+for_window [class="gnome-calculator"] border none
+
+# for calculator gnome
 
 # Scratchpad
 bindsym $mod+minus scratchpad show
