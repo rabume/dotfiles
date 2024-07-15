@@ -1,0 +1,30 @@
+[
+  {
+    "bindings": {
+      "ctrl-n": "workspace::ToggleLeftDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "g r": "editor::GoToImplementation",
+      "alt-1": "editor::AcceptInlineCompletion",
+      "alt-2": null,
+      "alt-3": null,
+      "alt-4": null,
+      "alt-5": null,
+      "alt-6": null,
+      "alt-7": null,
+      "alt-8": null,
+      "alt-9": null
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "shift-x": "pane::ReopenClosedItem",
+      "shift-w": "pane::CloseActiveItem",
+      "tab": "pane::ActivateNextItem",
+      "shift-tab": "pane::ActivatePrevItem"
+    }
+  }
+]
