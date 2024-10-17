@@ -379,6 +379,7 @@ bindsym $mod+c exec --no-startup-id rofi -modi "clipboard:greenclip print" -show
 # Asign workspaces to applications
 # ws1
 assign [class="firefox"] $ws1
+assign [class="zen-alpha"] $ws1
 
 # ws2
 assign [class="Code"] $ws2
