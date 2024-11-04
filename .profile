@@ -1,5 +1,5 @@
 export TERMINAL=alacritty
 export EDITOR=vim
-export BROWSER=zen-browser
+export BROWSER=firefox
 
 xset s off && xset -dpms
