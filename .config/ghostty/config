@@ -1,0 +1,11 @@
+background = "#1E1E2E"
+foreground = "#E1E1E1"
+bold-is-bright = true
+cursor-style = "block"
+font-size = 14.0
+font-family = "Fira Code"
+font-style = "regular"
+font-feature = "calt"
+font-feature = "liga"
+term = "xterm-256color"
+background-opacity = 0.9
