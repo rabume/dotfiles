@@ -36,3 +36,17 @@ vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' }
 vim.keymap.set('n', '<TAB>', ':BufferLineCycleNext<CR>', { desc = 'Move to next buffer' })
 vim.keymap.set('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', { desc = 'Move to next buffer' })
 vim.api.nvim_set_keymap('n', '<C-w>', ':bd<CR>', { noremap = true, silent = true })
+
+-- Git navigation keymaps (fast shortcuts)
+vim.keymap.set('n', '[g', function()
+  require('gitsigns').prev_hunk()
+end, { desc = 'Go to previous git change' })
+
+vim.keymap.set('n', ']g', function()
+  require('gitsigns').next_hunk()
+end, { desc = 'Go to next git change' })
+
+-- LSP implementation mapping with Telescope
+vim.keymap.set('n', 'gi', function()
+  require('telescope.builtin').lsp_implementations()
+end, { desc = 'Go to implementation with Telescope' })
