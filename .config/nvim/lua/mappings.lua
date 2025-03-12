@@ -8,8 +8,13 @@ vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true, silent = true 
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-w>k', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true, silent = true })
 
--- LazyGit
-vim.api.nvim_set_keymap('n', '<leader>gg', ':LazyGit<CR>', { noremap = true, silent = true })
+-- LazyGit with custom file opening
+vim.api.nvim_set_keymap(
+  'n',
+  '<leader>gg',
+  ':lua require("utils.lazygit_opener").start_lazygit()<CR>',
+  { noremap = true, silent = true, desc = 'Open LazyGit with file opener' }
+)
 
 -- Copilot
 vim.api.nvim_set_keymap('n', '<leader>dc', ':Copilot disable<CR>', { noremap = true, silent = true })
@@ -50,3 +55,9 @@ end, { desc = 'Go to next git change' })
 vim.keymap.set('n', 'gi', function()
   require('telescope.builtin').lsp_implementations()
 end, { desc = 'Go to implementation with Telescope' })
+
+-- Terminal mappings (toggleterm.nvim)
+vim.keymap.set('n', '<leader>tv', ':ToggleTerm direction=vertical<CR>', { desc = 'Open terminal in vertical split' })
+vim.keymap.set('n', '<leader>th', ':ToggleTerm direction=horizontal<CR>', { desc = 'Open terminal in horizontal split at bottom' })
+vim.keymap.set('n', '<leader>tf', ':ToggleTerm direction=float<CR>', { desc = 'Open floating terminal' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
